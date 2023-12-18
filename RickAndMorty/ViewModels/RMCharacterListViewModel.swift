@@ -13,6 +13,8 @@ protocol RMCharacterListViewModelDelegate: AnyObject {
     func didSelectCharacter(_ character: RMCharacter)
 }
 
+
+
 //View Model to handle character list view logic
 class RMCharacterListViewModel : NSObject {
     
