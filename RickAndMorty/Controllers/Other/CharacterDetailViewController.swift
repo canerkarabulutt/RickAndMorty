@@ -98,7 +98,7 @@ extension CharacterDetailViewController : UICollectionViewDelegate, UICollection
             case .episodes:
                 let episodes = self.viewModel.episodes
                 let selection = episodes[indexPath.row]
-                let vc = RMEpisodeDetailViewController(url: URL(string: selection))
+                let vc = EpisodeDetailViewController(url: URL(string: selection))
                 navigationController?.pushViewController(vc, animated: true)
         }
     }
