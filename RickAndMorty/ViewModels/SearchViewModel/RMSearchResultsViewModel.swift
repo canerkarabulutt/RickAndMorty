@@ -5,4 +5,10 @@
 //  Created by Caner Karabulut on 29.02.2024.
 //
 
-import Foundation
+import UIKit
+
+enum RMSearchResultsViewType{
+    case characters([RMCharacterCollectionViewCellViewModel])
+    case episodes([RMCharacterEpisodeCollectionViewCellViewModel])
+    case locations([RMLocationTableViewCellViewModel])
+}
