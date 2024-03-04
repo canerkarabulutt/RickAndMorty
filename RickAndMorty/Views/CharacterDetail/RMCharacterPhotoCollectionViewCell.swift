@@ -43,7 +43,6 @@ class RMCharacterPhotoCollectionViewCell: UICollectionViewCell {
                     }
                 case .failure:
                     break
-                    
             }
         }
     }

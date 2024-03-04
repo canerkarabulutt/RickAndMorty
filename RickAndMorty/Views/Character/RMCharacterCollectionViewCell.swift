@@ -6,9 +6,11 @@
 //
 
 import UIKit
-///Single cell for a character
+
 class RMCharacterCollectionViewCell: UICollectionViewCell {
     //MARK: - Properties
+    static let cellIdentifier = "RMCharacterCollectionViewCell"
+
     private let imageView: UIImageView = {
        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -28,8 +30,6 @@ class RMCharacterCollectionViewCell: UICollectionViewCell {
         return label
     }()
     //MARK: - Lifecycle
-    static let cellIdentifier = "RMCharacterCollectionViewCell"
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         style()

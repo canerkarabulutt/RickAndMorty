@@ -7,7 +7,6 @@
 
 import UIKit
 
-///View for single character info
 class RMCharacterDetailView: UIView {
     //MARK: - Properties
     public var collectionView: UICollectionView?

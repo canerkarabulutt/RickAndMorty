@@ -13,7 +13,6 @@ protocol RMCharacterListViewModelDelegate: AnyObject {
     func didSelectCharacter(_ character: RMCharacter)
 }
 
-//View Model to handle character list view logic
 class RMCharacterListViewModel : NSObject {
     
     public weak var delegate: RMCharacterListViewModelDelegate?
@@ -34,7 +33,7 @@ class RMCharacterListViewModel : NSObject {
     private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
     
     private var apiInfo: RMGetAllCharactersResponse.Info? = nil
-    // Fetch initial set of characters(20)
+    
     public func fetchCharacters() {
         RMService.shared.execute(.listCharactersRequests, expecting: RMGetAllCharactersResponse.self) { [weak self] result in
             switch result {
@@ -51,9 +50,8 @@ class RMCharacterListViewModel : NSObject {
             }
         }
     }
-    // Paginate if additional characters are needed
     public func fetchAdditionalCharacters(url: URL) {
-        //Fetch characters
+        
         guard !isLoadingMoreCharacters else {
             return
         }
@@ -86,7 +84,6 @@ class RMCharacterListViewModel : NSObject {
                 case .failure(let failure):
                     print(String(describing: failure))
                     self?.isLoadingMoreCharacters = false
-
             }
         }
     }
@@ -107,8 +104,16 @@ extension RMCharacterListViewModel : UICollectionViewDataSource, UICollectionVie
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let bounds = UIScreen.main.bounds
-        let width = (bounds.width-30) / 2
+        let isIphone = UIDevice.current.userInterfaceIdiom == .phone
+        
+        let bounds = collectionView.bounds
+        let width: CGFloat
+        
+        if isIphone {
+            width = (bounds.width-30)/2
+        } else {
+            width = (bounds.width-50)/4
+        }
         return CGSize(width: width, height: width * 1.5)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -142,10 +147,8 @@ extension RMCharacterListViewModel : UIScrollViewDelegate {
             let totalScrollViewFixedHeight = scrollView.frame.size.height
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 self?.fetchAdditionalCharacters(url: url)
-
             }
             t.invalidate()
         }
     }
-    
 }

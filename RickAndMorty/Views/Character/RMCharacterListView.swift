@@ -11,7 +11,6 @@ protocol RMCharacterListViewDelegate: AnyObject {
     func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter)
 }
 
-///View that handless showing list of characters, loader, etc.
 class RMCharacterListView: UIView {
     //MARK: - Properties
     
@@ -38,7 +37,6 @@ class RMCharacterListView: UIView {
         super.init(frame: frame)
         style()
         layout()
-        //necessary RMCharacterListViewModelDelegate protocol
         viewModel.delegate = self
     }
     
@@ -51,14 +49,11 @@ extension RMCharacterListView {
 
     private func style() {
         translatesAutoresizingMaskIntoConstraints = false
-        //setUpCollectionView
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(RMCharacterCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier)
         collectionView.register(RMFooterLoadingCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier)
         collectionView.dataSource = viewModel
         collectionView.delegate = viewModel
-
-        //spinner
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimating()
         viewModel.fetchCharacters()
@@ -78,7 +73,6 @@ extension RMCharacterListView {
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
-        
     }
 }
 //MARK: - RMCharacterListViewModelDelegate Protocol
@@ -89,7 +83,7 @@ extension RMCharacterListView : RMCharacterListViewModelDelegate {
     }
     func didLoadInitialCharacters() {
         self.spinner.stopAnimating()
-        collectionView.reloadData() // Initial fetch of characters
+        collectionView.reloadData()
         self.collectionView.isHidden = false
         UIView.animate(withDuration: 0.4) {
             self.collectionView.alpha = 1

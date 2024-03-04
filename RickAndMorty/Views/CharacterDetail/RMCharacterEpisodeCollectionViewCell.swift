@@ -51,7 +51,6 @@ extension RMCharacterEpisodeCollectionViewCell {
         contentView.backgroundColor = .tertiarySystemBackground
         contentView.layer.cornerRadius = 8
         contentView.layer.borderWidth = 2
-        contentView.layer.borderColor = UIColor.systemBlue.cgColor
         
         seasonLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -83,13 +82,11 @@ extension RMCharacterEpisodeCollectionViewCell {
     }
     public func configure(with viewModel: RMCharacterEpisodeCollectionViewCellViewModel) {
         viewModel.registerForData { [weak self] data in
-            print(data.name)
-            print(data.air_date)
-            print(data.episode)
             self?.nameLabel.text = data.name
             self?.seasonLabel.text = "Episode "+data.episode
             self?.airDateLabel.text = "Aired on "+data.air_date
         }
         viewModel.fetchEpisode()
+        contentView.layer.borderColor = viewModel.borderColor.cgColor
     }
 }

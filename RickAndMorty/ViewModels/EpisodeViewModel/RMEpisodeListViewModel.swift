@@ -13,7 +13,6 @@ protocol RMEpisodeListViewModelDelegate: AnyObject {
     func didSelectEpisode(_ episode: RMEpisode)
 }
 
-//View Model to handle episode list view logic
 class RMEpisodeListViewModel : NSObject {
     
     public weak var delegate: RMEpisodeListViewModelDelegate?
@@ -44,7 +43,7 @@ class RMEpisodeListViewModel : NSObject {
     private var cellViewModels: [RMCharacterEpisodeCollectionViewCellViewModel] = []
     
     private var apiInfo: RMGetAllEpisodesResponse.Info? = nil
-    // Fetch initial set of episodes(20)
+    
     public func fetchEpisodes() {
         RMService.shared.execute(.listEpisodessRequests, expecting: RMGetAllEpisodesResponse.self) { [weak self] result in
             switch result {
@@ -61,7 +60,6 @@ class RMEpisodeListViewModel : NSObject {
             }
         }
     }
-    // Paginate if additional episodes are needed
     public func fetchAdditionalEpisodes(url: URL) {
         //Fetch characters
         guard !isLoadingMoreCharacters else {
@@ -96,7 +94,6 @@ class RMEpisodeListViewModel : NSObject {
                 case .failure(let failure):
                     print(String(describing: failure))
                     self?.isLoadingMoreCharacters = false
-
             }
         }
     }
@@ -152,7 +149,6 @@ extension RMEpisodeListViewModel : UIScrollViewDelegate {
             let totalScrollViewFixedHeight = scrollView.frame.size.height
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 self?.fetchAdditionalEpisodes(url: url)
-
             }
             t.invalidate()
         }
